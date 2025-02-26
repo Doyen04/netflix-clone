@@ -10,7 +10,6 @@ import { useCallback, useState } from "react";
 import { Login } from "@/lib/loginHandle";
 
 
-
 const Auth = () => {
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
@@ -37,22 +36,23 @@ const Auth = () => {
     }, [email, name, password])
 
 
-    const login = useCallback( async (e: React.FormEvent) => {
+    const login = useCallback(async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             const response = await Login(email, password)
-            
-            if (response) {
+
+            if (!!response.error) {
                 console.error("response.error");
 
             } else {
                 console.log('success');
             }
         } catch (error) {
-            console.error("error", error);
+            console.log(error);
+            console.log("Check your Credentials");
         }
     }, [email, password])
-    
+
     return (
         <div className="relative h-full w-full bg-[url('/images/hero.jpeg')] bg-no-repeat bg-center bg-fixed bg-cover">
             <div className="bg-black w-full h-full lg:bg-black/50">

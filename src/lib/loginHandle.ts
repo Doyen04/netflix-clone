@@ -10,7 +10,6 @@ export const Login = async (email: string, password: string) => {
             redirect: false,
             // redirectTo: '/'
         })
-        console.log("errrot ", res)
         return res
     } catch (error) {
         throw new Error(error as string);
