@@ -8,9 +8,11 @@ import Image from "next/image";
 import { useCallback, useState } from "react";
 
 import { Login } from "@/lib/loginHandle";
+import { useRouter } from "next/navigation";
 
 
 const Auth = () => {
+    const router = useRouter()
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
@@ -19,23 +21,8 @@ const Auth = () => {
 
     const toggleVariant = useCallback(() => {
         setVariant((currentVariant) => currentVariant == 'login' ? 'register' : 'login')
-    }, [])
-
-    const register = useCallback(async (e: React.FormEvent) => {
-        e.preventDefault()
-        try {
-            await axios.post('/api/auth/register', {
-                email,
-                name,
-                password
-            })
-        } catch (error) {
-            console.log(error);
-
-        }
-    }, [email, name, password])
-
-
+    }, []) 
+    
     const login = useCallback(async (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -46,16 +33,33 @@ const Auth = () => {
 
             } else {
                 console.log('success');
+                router.push('/profile')
             }
         } catch (error) {
             console.log(error);
             console.log("Check your Credentials");
         }
-    }, [email, password])
+    }, [email, password, router])
+
+    const register = useCallback(async (e: React.FormEvent) => {
+        e.preventDefault()
+        try {
+            await axios.post('/api/auth/register', {
+                email,
+                name,
+                password
+            })
+            login(e)
+        } catch (error) {
+            console.log(error);
+
+        }
+    }, [email, login, name, password])
+
 
     return (
         <div className="relative h-full w-full bg-[url('/images/hero.jpeg')] bg-no-repeat bg-center bg-fixed bg-cover">
-            <div className="bg-black w-full h-full lg:bg-black/50">
+            <div className="bg-black w-full h-full lg:bg-black/50 ">
                 <div className="px-12 py-5">
                     <Image src={'/images/netflix.png'} alt={'logo'} width={78} height={48} />
                 </div>

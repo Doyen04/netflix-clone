@@ -1,14 +1,17 @@
-"use client"
+// "use client"
+// import { auth, signOut } from "@/auth";
+import Navbar from "@/component/navbar";
 
 // import { signIn } from "next-auth/react";
 
 
 
-const Home = () => {
+const Home = async () => {
+    // const session = await auth()
+    
     return (
-        <div className="text-2xl text-green-500">
-            Netflix Clone
-            {/* <button onClick={async ()=>{signIn() }}>hhhhhhhhhhhhhh</button> */}
+        <div >
+           <Navbar />
         </div>
     );
 }

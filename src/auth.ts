@@ -5,12 +5,11 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import NextAuth from "next-auth"
 
 import CredentialsProvider from "next-auth/providers/credentials";
+import { authConfig } from "./auth.config";
 
 
-export const { handlers: {GET, POST}, signIn, signOut, auth } = NextAuth({
-    session: {
-        strategy: 'jwt'
-    },
+export const { handlers: { GET, POST }, signIn, signOut, auth } = NextAuth({
+    ...authConfig,
     adapter: PrismaAdapter(prisma),
     providers: [
         CredentialsProvider({
@@ -48,11 +47,7 @@ export const { handlers: {GET, POST}, signIn, signOut, auth } = NextAuth({
         })
 
     ],
-    pages:{
-        signIn: '/login',
-    },
-    // debug: true,
-    secret: process.env.AUTH_SECRET,
+
 
 
 })
